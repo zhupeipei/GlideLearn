@@ -1,0 +1,5 @@
+include ':app'
+include ':glide:third_party:gif_decoder'
+include ':glide:third_party:disklrucache'
+include ':glide:library'
+rootProject.name = "GlideLearn"
