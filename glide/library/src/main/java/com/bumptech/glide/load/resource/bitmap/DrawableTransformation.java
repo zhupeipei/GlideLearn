@@ -48,6 +48,7 @@ public class DrawableTransformation implements Transformation<Drawable> {
       @NonNull Context context, @NonNull Resource<Drawable> resource, int outWidth, int outHeight) {
     BitmapPool bitmapPool = Glide.get(context).getBitmapPool();
     Drawable drawable = resource.get();
+    // 这里会把drawable的res转成bitmap的resouce
     Resource<Bitmap> bitmapResourceToTransform =
         DrawableToBitmapConverter.convert(bitmapPool, drawable, outWidth, outHeight);
     if (bitmapResourceToTransform == null) {

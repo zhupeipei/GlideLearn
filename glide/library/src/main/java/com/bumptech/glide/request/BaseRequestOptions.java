@@ -827,6 +827,7 @@ public abstract class BaseRequestOptions<T extends BaseRequestOptions<T>> implem
     }
 
     downsample(downsampleStrategy);
+    // transformation CenterCrop CenterCrop本身是一个transformation
     return transform(transformation, /*isRequired=*/ false);
   }
 
@@ -968,7 +969,7 @@ public abstract class BaseRequestOptions<T extends BaseRequestOptions<T>> implem
 
     DrawableTransformation drawableTransformation =
         new DrawableTransformation(transformation, isRequired);
-    transform(Bitmap.class, transformation, isRequired);
+    transform(Bitmap.class, transformation, isRequired); // transformation CenterCrop
     transform(Drawable.class, drawableTransformation, isRequired);
     // TODO: remove BitmapDrawable decoder and this transformation.
     // Registering as BitmapDrawable is simply an optimization to avoid some iteration and

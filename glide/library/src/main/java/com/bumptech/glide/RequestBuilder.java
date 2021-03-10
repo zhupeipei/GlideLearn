@@ -9,6 +9,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.util.Log;
 import android.widget.ImageView;
 import androidx.annotation.CheckResult;
 import androidx.annotation.DrawableRes;
@@ -713,11 +714,13 @@ public class RequestBuilder<TranscodeType> extends BaseRequestOptions<RequestBui
       BaseRequestOptions<?> options,
       Executor callbackExecutor) {
     Preconditions.checkNotNull(target);
+    // 这里是在load方法上加了一个isModelSet变量 而不是通过model是否为空来进行判断 感觉挺好的一种方式
     if (!isModelSet) {
       throw new IllegalArgumentException("You must call #load() before calling #into()");
     }
 
     Request request = buildRequest(target, targetListener, options, callbackExecutor);
+    Log.d("zimotag", "request " + request);
 
     Request previous = target.getRequest();
     if (request.isEquivalentTo(previous)

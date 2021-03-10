@@ -313,6 +313,7 @@ class DecodeJob<R>
       currentGenerator = getNextGenerator();
 
       if (stage == Stage.SOURCE) {
+        Log.d("zimotag", "runGenerators " + currentThread.getName());
         reschedule();
         return;
       }
@@ -385,6 +386,8 @@ class DecodeJob<R>
     this.currentAttemptingKey = attemptedKey;
     this.isLoadingFromAlternateCacheKey = sourceKey != decodeHelper.getCacheKeys().get(0);
 
+    Log.d("zimotag", "onDataFetcherReady " + (Thread.currentThread() == currentThread) + ", " + stage.name() + ", " + runReason.name());
+    Log.d("zimotag", Log.getStackTraceString(new Throwable()));
     if (Thread.currentThread() != currentThread) {
       runReason = RunReason.DECODE_DATA;
       callback.reschedule(this);
@@ -414,6 +417,7 @@ class DecodeJob<R>
   }
 
   private void decodeFromRetrievedData() {
+    Log.d("zimotag", "decodeFromRetrievedData " + stage.name() + ", " + runReason.name() + Thread.currentThread().getName());
     if (Log.isLoggable(TAG, Log.VERBOSE)) {
       logWithTimeAndKey(
           "Retrieved data",
@@ -565,6 +569,7 @@ class DecodeJob<R>
     Resource<Z> transformed = decoded;
     if (dataSource != DataSource.RESOURCE_DISK_CACHE) {
       appliedTransformation = decodeHelper.getTransformation(resourceSubClass);
+      Log.d("zimotag", "resourceSubClass: " + resourceSubClass + ", appliedTransformation: " + appliedTransformation);
       transformed = appliedTransformation.transform(glideContext, decoded, width, height);
     }
     // TODO: Make this the responsibility of the Transformation.

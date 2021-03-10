@@ -1,5 +1,7 @@
 package com.bumptech.glide.load.engine;
 
+import android.util.Log;
+
 import com.bumptech.glide.GlideContext;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.Registry;
@@ -132,6 +134,9 @@ final class DecodeHelper<Transcode> {
   }
 
   List<Class<?>> getRegisteredResourceClasses() {
+    // resourceClass Object.class
+    // transcodeClass Drawable.class
+    Log.d("zimotag", "getRegisteredResourceClasses " + model.getClass() + resourceClass + transcodeClass);
     return glideContext
         .getRegistry()
         .getRegisteredResourceClasses(model.getClass(), resourceClass, transcodeClass);
@@ -204,10 +209,12 @@ final class DecodeHelper<Transcode> {
     if (!isLoadDataSet) {
       isLoadDataSet = true;
       loadData.clear();
+      Log.d("zimotag", "getLoadData " + model);
       List<ModelLoader<Object, ?>> modelLoaders = glideContext.getRegistry().getModelLoaders(model);
       //noinspection ForLoopReplaceableByForEach to improve perf
       for (int i = 0, size = modelLoaders.size(); i < size; i++) {
         ModelLoader<Object, ?> modelLoader = modelLoaders.get(i);
+        Log.d("zimotag", "getLoadData " + modelLoader.toString());
         LoadData<?> current = modelLoader.buildLoadData(model, width, height, options);
         if (current != null) {
           loadData.add(current);

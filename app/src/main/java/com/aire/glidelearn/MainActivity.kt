@@ -1,15 +1,11 @@
 package com.aire.glidelearn
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.bumptech.glide.RequestBuilder
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
 
 class MainActivity : AppCompatActivity() {
     val iv: ImageView by lazy { findViewById<ImageView>(R.id.main_iv) }
@@ -20,6 +16,7 @@ class MainActivity : AppCompatActivity() {
         AA.ma()
     }
 
+    var i = 0
     fun clickToLoadImage(view: View) {
 //        val listener = object : RequestListener<String?, GlideDrawable> {
 //            override fun onException(e: Exception?, model: String?,
@@ -38,6 +35,16 @@ class MainActivity : AppCompatActivity() {
 //            }
 //        }
 //        Glide.with(this).load(UrlConstants.IMAGE_URL).listener(listener).into(iv)
-        Glide.with(this).load(UrlConstants.IMAGE_URL).into(iv)
+        if (i == 0) {
+            i = 1
+            Glide.with(this).load(UrlConstants.IMAGE_URL).into(iv)
+            this.iv.postDelayed(Runnable {
+                startActivity(Intent(this, MainActivity2::class.java))
+            }, 1000)
+//            Glide.with(this).load(R.drawable.ic_launcher_background).into(iv)
+        } else {
+            i = 0
+            Glide.with(this).load(R.mipmap.ic_launcher).into(iv)
+        }
     }
 }

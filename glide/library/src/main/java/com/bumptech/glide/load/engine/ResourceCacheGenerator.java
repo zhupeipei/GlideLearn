@@ -1,5 +1,7 @@
 package com.bumptech.glide.load.engine;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.Key;
@@ -45,7 +47,8 @@ class ResourceCacheGenerator implements DataFetcherGenerator, DataFetcher.DataCa
     if (sourceIds.isEmpty()) {
       return false;
     }
-    List<Class<?>> resourceClasses = helper.getRegisteredResourceClasses();
+    List<Class<?>> resourceClasses = helper.getRegisteredResourceClasses(); // GifDrawable BitmapDrawable Bitmap
+                                                                            // GifDrawableTransformation DrawableTransformation CenterCrop
     if (resourceClasses.isEmpty()) {
       if (File.class.equals(helper.getTranscodeClass())) {
         return false;
@@ -68,6 +71,8 @@ class ResourceCacheGenerator implements DataFetcherGenerator, DataFetcher.DataCa
 
       Key sourceId = sourceIds.get(sourceIdIndex);
       Class<?> resourceClass = resourceClasses.get(resourceClassIndex);
+      Log.d("zimotag", "getTransformation resourceClass: " + resourceClass);
+//      Log.d("zimotag", Log.getStackTraceString(new Throwable()));
       Transformation<?> transformation = helper.getTransformation(resourceClass);
       // PMD.AvoidInstantiatingObjectsInLoops Each iteration is comparatively expensive anyway,
       // we only run until the first one succeeds, the loop runs for only a limited
@@ -90,6 +95,7 @@ class ResourceCacheGenerator implements DataFetcherGenerator, DataFetcher.DataCa
       }
     }
 
+    // 这里没有执行到
     loadData = null;
     boolean started = false;
     while (!started && hasNextModelLoader()) {

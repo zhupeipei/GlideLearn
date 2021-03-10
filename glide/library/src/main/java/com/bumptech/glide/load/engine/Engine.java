@@ -244,6 +244,7 @@ public class Engine
       Executor callbackExecutor,
       EngineKey key,
       long startTime) {
+    // R 为Drawable.class
 
     EngineJob<?> current = jobs.get(key, onlyRetrieveFromCache);
     if (current != null) {
